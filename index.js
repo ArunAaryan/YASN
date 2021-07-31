@@ -1,14 +1,15 @@
-const { Sequelize } = require('sequelize');
+import express from "express";
+import route from "./src/routes";
 
-// Option 1: Passing a connection URI
-const sequelize = new Sequelize('postgres://postgres:postgres@localhost:5432/YASN') // Example for postgres
+const app = express();
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log('Connection has been established successfully.');
-  })
-  .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+route(app);
+
+const port = 5000;
+
+app.listen(port, () => {
+  console.log("App is now running at port ", port);
+});
